@@ -1,0 +1,11 @@
+// One application root delegates two explicit producer namespaces.
+// KeyLocators emitted by this application carry key names, not certificate
+// Data names, so KEY has the /KEY/<key-id> form.
+#root: "root-network"/#KEY
+#subnetwork1_ca: "root-network"/"subnetwork1"/#KEY <= #root
+#subnetwork2_ca: "root-network"/"subnetwork2"/#KEY <= #root
+#subnetwork1_producer: "root-network"/"subnetwork1"/"helloworld"/#KEY <= #subnetwork1_ca
+#subnetwork2_producer: "root-network"/"subnetwork2"/"helloworld"/#KEY <= #subnetwork2_ca
+#subnetwork1_data: "root-network"/"subnetwork1"/"helloworld"/_ <= #subnetwork1_producer
+#subnetwork2_data: "root-network"/"subnetwork2"/"helloworld"/_ <= #subnetwork2_producer
+#KEY: "KEY"/_

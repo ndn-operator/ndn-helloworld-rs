@@ -43,13 +43,25 @@ logs `REJECTED data <name>:` and exits with status zero.
 
 ```shell
 cargo test --locked
-docker build -t ghcr.io/ndn-operator/ndn-helloworld-rs:v0.1.0 .
+docker build --platform=linux/amd64 \
+  --build-arg TARGET=x86_64-unknown-linux-musl \
+  --build-arg VERSION=0.1.0 \
+  -t ghcr.io/ndn-operator/ndn-helloworld-rs:v0.1.0 .
 ```
 
 `tests/ndnd-interop.sh` is the publication gate when an `ndnd` binary and a
 Unix-face test setup are available; Kubernetes integration tests exercise the
 same signed producer/validator path with operator-issued credentials.
 
-After the gate passes against `ndnd` 1.5.2, dispatch the `Build application
-image` workflow with `release_tag=v0.1.0` and confirm
-`ndnd_interop_passed`. Tag pushes alone do not publish an unverified image.
+## Releases
+
+After the gate passes against `ndnd` 1.5.2, merge the intended commit with a
+merge commit into `release` for a stable release or `pre-release` for an `rc`
+pre-release. Squash and rebase merges are intentionally not supported on
+these branches because the release tag targets the merged commit.
+
+The `Tag release` workflow authenticates as the `NDN Operator Releaser`
+GitHub App using the `RELEASER_APP_ID` repository variable and
+`RELEASER_PRIVATE_KEY` secret. Its pushed `v*` tag starts `Publish release
+image`, which publishes an amd64/arm64 image manifest and provenance to
+`ghcr.io/ndn-operator/ndn-helloworld-rs`.

@@ -40,6 +40,7 @@ async fn main() -> ExitCode {
 
 async fn run() -> Result<()> {
     let args = Args::parse();
+    println!("STARTING consumer v{}", env!("CARGO_PKG_VERSION"));
     let name = match args.name {
         Some(name) => name,
         None => default_data_name()?,

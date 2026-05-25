@@ -27,6 +27,7 @@ struct Args {
 #[tokio::main]
 async fn main() -> Result<()> {
     let args = Args::parse();
+    println!("STARTING producer v{}", env!("CARGO_PKG_VERSION"));
     let name = match args.name {
         Some(name) => name,
         None => default_data_name()?,

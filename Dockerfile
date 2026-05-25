@@ -1,10 +1,15 @@
-FROM rust:1.95-bookworm AS build
+FROM clux/muslrust:stable AS build
+ARG TARGET
+ARG VERSION
 WORKDIR /src
 COPY . .
-RUN cargo build --release --locked --bins
+RUN cargo install cargo-edit
+RUN cargo set-version "${VERSION}"
+RUN cargo build --target=${TARGET} --release --locked --bins
 
-FROM debian:bookworm-slim
-COPY --from=build /src/target/release/producer /producer
-COPY --from=build /src/target/release/consumer /consumer
+FROM scratch
+ARG TARGET
+COPY --from=build /src/target/${TARGET}/release/producer /producer
+COPY --from=build /src/target/${TARGET}/release/consumer /consumer
 USER 65532:65532
 ENTRYPOINT ["/consumer"]

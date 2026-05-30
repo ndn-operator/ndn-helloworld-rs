@@ -13,9 +13,12 @@ pem = "3.0"
 tokio = { version = "1.45", features = ["macros", "rt-multi-thread", "time"] }
 
 ndn-app = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042" }
+ndn-config = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042" }
+ndn-faces = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042" }
 ndn-ipc = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042" }
 ndn-packet = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042", features = ["std"] }
 ndn-security = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042" }
+ndn-transport = { git = "https://github.com/Quarmire/ndn-rs", rev = "991ab06233d0b7596eda30e70fe069659be50042" }
 
 [dev-dependencies]
 tempfile = "3.20"

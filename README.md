@@ -2,9 +2,10 @@
 
 Certificate-aware NDN producer and consumer binaries for `ndn-operator`
 examples. Both clients communicate through the Unix socket injected by the
-operator. The producer signs Data with an operator-issued `ndnd` ECDSA key;
-the consumer validates the certificate chain and the embedded Light VerSec
-policy before accepting content.
+operator. The producer advertises its served name as a client-origin route so
+`ndnd` can readvertise it across the routing domain, then signs Data with an
+operator-issued `ndnd` ECDSA key; the consumer validates the certificate chain
+and the embedded Light VerSec policy before accepting content.
 
 The application pins experimental
 [`Quarmire/ndn-rs`](https://github.com/Quarmire/ndn-rs) at commit
@@ -37,7 +38,9 @@ consumer --expect-reject --name /root-network/subnetwork1/helloworld/forged
 ```
 
 Successful validation logs `VERIFIED data <name>:`. Expected policy rejection
-logs `REJECTED data <name>:` and exits with status zero.
+logs `REJECTED data <name>:` and exits with status zero. Producer startup logs
+`ADVERTISED route <name>` after the local router accepts the client-origin RIB
+registration.
 
 ## Build And Test
 
